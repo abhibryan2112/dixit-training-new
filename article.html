@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Article... | Dixit Training</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Marked.js (Converts Markdown to HTML) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0b0a',
+                            light: '#f2f6e8',
+                            card: '#131512',
+                            neon: '#ccff00',
+                            gray: '#8a8d86'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0b0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(204, 255, 0, 0.04) 0%, rgba(10, 11, 10, 0) 60%);
+            top: -200px;
+            right: -200px;
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Custom Markdown Styling (Tailwind resets default HTML tags) */
+        #post-content h2 { font-size: 2rem; font-weight: 500; margin-top: 3rem; margin-bottom: 1rem; color: #ffffff; line-height: 1.2; }
+        #post-content h3 { font-size: 1.5rem; font-weight: 500; margin-top: 2rem; margin-bottom: 1rem; color: #ffffff; }
+        #post-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #9ca3af; font-size: 1.125rem; }
+        #post-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #9ca3af; font-size: 1.125rem; }
+        #post-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #9ca3af; font-size: 1.125rem; }
+        #post-content li { margin-bottom: 0.5rem; }
+        #post-content a { color: #ccff00; text-decoration: underline; text-underline-offset: 4px; }
+        #post-content strong { color: #ffffff; font-weight: 600; }
+        #post-content blockquote { border-left: 4px solid #ccff00; padding-left: 1.5rem; font-style: italic; color: #d1d5db; margin: 2rem 0; background: rgba(255,255,255,0.02); padding-top: 1rem; padding-bottom: 1rem; border-radius: 0 0.5rem 0.5rem 0; }
+        #post-content img { border-radius: 1rem; margin: 2.5rem 0; width: 100%; border: 1px solid rgba(255,255,255,0.05); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0b0a; }
+        ::-webkit-scrollbar-thumb { background: #2a2d28; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-neon selection:text-black">
+
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center bg-brand-dark/80 backdrop-blur-md rounded-full px-6 py-3 border border-white/10">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold tracking-tighter text-white">
+                    Dixit<span class="text-brand-neon">.</span>
+                </a>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-brand-neon transition-colors">Home</a>
+                    <a href="courses.html" class="hover:text-brand-neon transition-colors">Courses</a>
+                    <a href="about.html" class="hover:text-brand-neon transition-colors">About Us</a>
+                    <a href="blog.html" class="text-brand-neon transition-colors">Blog</a>
+                    <a href="contact.html" class="hover:text-brand-neon transition-colors">Contact</a>
+                </div>
+
+                <!-- CTA -->
+                <div class="hidden md:block">
+                    <a href="courses.html" class="bg-brand-light text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-neon transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,255,0,0.3)]">
+                        Enroll Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Article Section -->
+    <article class="max-w-3xl mx-auto pt-40 pb-32 px-6 min-h-screen relative z-10">
+        <!-- Back Button -->
+        <a href="blog.html" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-brand-neon transition-colors mb-10 group">
+            <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Back to Articles
+        </a>
+
+        <!-- Content Structure to be populated by JS -->
+        <div id="loading-state" class="text-center py-20">
+            <div class="w-8 h-8 border-2 border-brand-neon border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-500">Loading article...</p>
+        </div>
+
+        <div id="article-wrapper" class="hidden">
+            <h1 id="post-title" class="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.15] tracking-tight mb-6 text-white"></h1>
+            
+            <div class="flex items-center gap-4 text-sm text-gray-500 mb-10 border-b border-white/5 pb-8">
+                <span id="post-date" class="font-medium text-gray-400"></span>
+                <span>•</span>
+                <span>Dixit Training</span>
+            </div>
+
+            <img id="post-image" src="" alt="Article cover image" class="w-full aspect-[2/1] object-cover rounded-3xl mb-12 border border-white/5 hidden">
+            
+            <div id="post-content" class="w-full font-sans"></div>
+        </div>
+
+        <div id="error-state" class="hidden text-center py-20 bg-red-500/10 border border-red-500/20 rounded-3xl">
+            <p class="text-red-400 mb-4 text-lg">Article not found.</p>
+            <a href="blog.html" class="text-white underline hover:text-brand-neon">Return to blog</a>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 pt-16 pb-8 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <a href="index.html" class="text-3xl font-bold tracking-tighter text-white mb-6 block">
+                        Dixit<span class="text-brand-neon">.</span>
+                    </a>
+                    <p class="text-gray-500 max-w-sm mb-6">Making financial literacy accessible, practical, and jargon-free.</p>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600">&copy; 2026 Dixit Training. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fetch and Render Script -->
+    <script>
+        // 1. Get the 'slug' from the URL (e.g. ?slug=my-first-post)
+        const params = new URLSearchParams(window.location.search);
+        const currentSlug = params.get('slug');
+
+        const loadingState = document.getElementById('loading-state');
+        const articleWrapper = document.getElementById('article-wrapper');
+        const errorState = document.getElementById('error-state');
+
+        // Sticky Navbar Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        if (!currentSlug) {
+            loadingState.classList.add('hidden');
+            errorState.classList.remove('hidden');
+        } else {
+            // 2. Fetch the JSON file generated by Netlify CMS
+            fetch('/data/posts.json')
+                .then(response => response.json())
+                .then(data => {
+                    loadingState.classList.add('hidden');
+                    
+                    if (data && data.items) {
+                        // 3. Find the exact post matching our URL slug
+                        const post = data.items.find(p => p.slug === currentSlug);
+
+                        if (post) {
+                            // 4. Update the DOM elements with post data
+                            document.title = `${post.title} | Dixit Training Blog`;
+                            document.getElementById('post-title').innerText = post.title;
+                            document.getElementById('post-date').innerText = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                            
+                            // Handle Cover Image
+                            const imageEl = document.getElementById('post-image');
+                            if (post.image) {
+                                imageEl.src = post.image;
+                                imageEl.classList.remove('hidden');
+                            }
+
+                            // 5. Convert Markdown body to HTML using Marked.js
+                            if (post.body) {
+                                document.getElementById('post-content').innerHTML = marked.parse(post.body);
+                            }
+
+                            articleWrapper.classList.remove('hidden');
+                        } else {
+                            // Slug not found in JSON
+                            errorState.classList.remove('hidden');
+                        }
+                    } else {
+                        // JSON empty or malformed
+                        errorState.classList.remove('hidden');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching post data:', err);
+                    loadingState.classList.add('hidden');
+                    errorState.classList.remove('hidden');
+                });
+        }
+    </script>
+</body>
+</html>

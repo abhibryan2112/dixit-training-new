@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses | Dixit Training</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0b0a',
+                            light: '#f2f6e8',
+                            card: '#131512',
+                            neon: '#ccff00',
+                            gray: '#8a8d86'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #0a0b0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Subtle glowing background effect */
+        .bg-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(204, 255, 0, 0.04) 0%, rgba(10, 11, 10, 0) 60%);
+            top: -300px;
+            left: -300px;
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0b0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2d28;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ccff00;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-neon selection:text-black">
+
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center bg-brand-dark/80 backdrop-blur-md rounded-full px-6 py-3 border border-white/10">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold tracking-tighter text-white">
+                    Dixit<span class="text-brand-neon">.</span>
+                </a>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-brand-neon transition-colors">Home</a>
+                    <a href="courses.html" class="text-brand-neon transition-colors">Courses</a>
+                    <a href="about.html" class="hover:text-brand-neon transition-colors">About Us</a>
+                    <a href="contact.html" class="hover:text-brand-neon transition-colors">Contact</a>
+                </div>
+
+                <!-- CTA -->
+                <div class="hidden md:block">
+                    <a href="#enroll" class="bg-brand-light text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-neon transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,255,0,0.3)]">
+                        Enroll Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white focus:outline-none" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div class="md:hidden hidden absolute w-full bg-brand-dark/95 backdrop-blur-lg border-b border-white/10 left-0 top-[80px]" id="mobile-menu">
+            <div class="px-6 py-6 space-y-4 flex flex-col">
+                <a href="index.html" class="text-gray-300 text-lg font-medium">Home</a>
+                <a href="courses.html" class="text-brand-neon text-lg font-medium">Courses</a>
+                <a href="about.html" class="text-gray-300 text-lg font-medium">About Us</a>
+                <a href="contact.html" class="text-gray-300 text-lg font-medium">Contact</a>
+                <a href="#enroll" class="bg-brand-neon text-black text-center px-6 py-3 rounded-full font-semibold mt-4">Enroll Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-40 pb-20 px-6 max-w-7xl mx-auto text-center relative z-10">
+        <div class="reveal">
+            <span class="inline-block px-4 py-1.5 border border-brand-neon/30 bg-brand-neon/5 rounded-full text-xs font-semibold tracking-wider text-brand-neon uppercase mb-6">
+                Curriculum
+            </span>
+            <h1 class="text-5xl md:text-7xl font-medium tracking-tight leading-[1.1] mb-6">
+                Our Finance <span class="font-serif italic font-light text-brand-neon">Courses.</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Practical, step-by-step programs designed to eliminate jargon and give you complete confidence in financial decision-making. Choose your path below.
+            </p>
+        </div>
+    </header>
+
+    <!-- Courses List Section -->
+    <section class="py-12 pb-32 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Course 1 -->
+                <div class="bg-brand-card border border-white/5 rounded-3xl p-8 hover:bg-[#1a1d17] hover:border-brand-neon/30 transition-all duration-500 group flex flex-col reveal">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-brand-neon/20 group-hover:text-brand-neon transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/5 rounded-full text-xs font-medium text-gray-300">4 Weeks</span>
+                            <span class="px-3 py-1 bg-brand-neon/10 rounded-full text-xs font-medium text-brand-neon border border-brand-neon/20">Beginner</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-medium mb-4 group-hover:text-brand-neon transition-colors">Finance for Non-Finance Professionals</h3>
+                    <p class="text-gray-400 text-base mb-8 flex-grow">
+                        Designed specifically for marketers, HR, ops, and tech leaders. Learn to speak the language of business, understand financial health, and make decisions that drive profitability.
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-6 border-t border-white/5">
+                        <ul class="text-sm text-gray-500 space-y-2">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Budgeting Basics</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Financial Jargon Decoded</li>
+                        </ul>
+                        <a href="#enroll" class="bg-white/10 text-white px-6 py-3 rounded-full text-sm font-semibold group-hover:bg-brand-neon group-hover:text-black transition-all">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="bg-brand-card border border-white/5 rounded-3xl p-8 hover:bg-[#1a1d17] hover:border-brand-neon/30 transition-all duration-500 group flex flex-col reveal delay-100">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-brand-neon/20 group-hover:text-brand-neon transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/5 rounded-full text-xs font-medium text-gray-300">2 Weeks</span>
+                            <span class="px-3 py-1 bg-blue-500/10 rounded-full text-xs font-medium text-blue-400 border border-blue-500/20">Intermediate</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-medium mb-4 group-hover:text-brand-neon transition-colors">Understanding Balance Sheets</h3>
+                    <p class="text-gray-400 text-base mb-8 flex-grow">
+                        Stop feeling intimidated by multi-page financial statements. We break down the balance sheet into visual, easy-to-understand components so you can instantly gauge a company's true value.
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-6 border-t border-white/5">
+                        <ul class="text-sm text-gray-500 space-y-2">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Assets vs Liabilities</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Working Capital Analysis</li>
+                        </ul>
+                        <a href="#enroll" class="bg-white/10 text-white px-6 py-3 rounded-full text-sm font-semibold group-hover:bg-brand-neon group-hover:text-black transition-all">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="bg-brand-card border border-white/5 rounded-3xl p-8 hover:bg-[#1a1d17] hover:border-brand-neon/30 transition-all duration-500 group flex flex-col reveal">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-brand-neon/20 group-hover:text-brand-neon transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/5 rounded-full text-xs font-medium text-gray-300">2 Weeks</span>
+                            <span class="px-3 py-1 bg-brand-neon/10 rounded-full text-xs font-medium text-brand-neon border border-brand-neon/20">Beginner</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-medium mb-4 group-hover:text-brand-neon transition-colors">Profit & Loss Simplified</h3>
+                    <p class="text-gray-400 text-base mb-8 flex-grow">
+                        Is your business actually making money? Learn how to read, create, and analyze a P&L statement to spot revenue leaks and optimize your profit margins immediately.
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-6 border-t border-white/5">
+                        <ul class="text-sm text-gray-500 space-y-2">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Gross vs Net Margins</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Expense Tracking</li>
+                        </ul>
+                        <a href="#enroll" class="bg-white/10 text-white px-6 py-3 rounded-full text-sm font-semibold group-hover:bg-brand-neon group-hover:text-black transition-all">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="bg-brand-card border border-white/5 rounded-3xl p-8 hover:bg-[#1a1d17] hover:border-brand-neon/30 transition-all duration-500 group flex flex-col reveal delay-100">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center group-hover:bg-brand-neon/20 group-hover:text-brand-neon transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/5 rounded-full text-xs font-medium text-gray-300">3 Weeks</span>
+                            <span class="px-3 py-1 bg-brand-neon/10 rounded-full text-xs font-medium text-brand-neon border border-brand-neon/20">Beginner</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-medium mb-4 group-hover:text-brand-neon transition-colors">Personal Budgeting & Investing</h3>
+                    <p class="text-gray-400 text-base mb-8 flex-grow">
+                        Take control of your personal wealth. A jargon-free guide to creating realistic budgets, managing debt, and starting your investment journey with total confidence.
+                    </p>
+                    
+                    <div class="flex items-center justify-between pt-6 border-t border-white/5">
+                        <ul class="text-sm text-gray-500 space-y-2">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> 50/30/20 Rule</li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 bg-brand-neon rounded-full"></div> Smart Investing 101</li>
+                        </ul>
+                        <a href="#enroll" class="bg-white/10 text-white px-6 py-3 rounded-full text-sm font-semibold group-hover:bg-brand-neon group-hover:text-black transition-all">
+                            Enroll Now
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom CTA Section (Matching Home) -->
+    <section class="py-24 px-6 reveal border-t border-white/5 bg-gradient-to-b from-brand-dark to-black" id="enroll">
+        <div class="max-w-5xl mx-auto bg-brand-light rounded-[3rem] p-12 md:p-20 text-center text-brand-dark relative overflow-hidden shadow-2xl">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-50"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-6xl font-medium mb-6">Ready to <span class="font-serif italic text-gray-800">Upskill?</span></h2>
+                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">Get practical finance training that actually makes sense. Secure your spot in our next cohort today.</p>
+                
+                <a href="contact.html" class="inline-flex items-center justify-center bg-brand-dark text-white px-10 py-5 rounded-full text-lg font-medium hover:bg-brand-neon hover:text-black transition-all hover:scale-105 shadow-xl duration-300">
+                    Contact Us To Enroll
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 pt-16 pb-8 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <a href="index.html" class="text-3xl font-bold tracking-tighter text-white mb-6 block">
+                        Dixit<span class="text-brand-neon">.</span>
+                    </a>
+                    <p class="text-gray-500 max-w-sm mb-6">
+                        Making financial literacy accessible, practical, and jargon-free for professionals, founders, and students everywhere.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">in</a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">tw</a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">ig</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm">
+                        <li><a href="index.html" class="hover:text-brand-neon transition-colors">Home</a></li>
+                        <li><a href="courses.html" class="text-brand-neon transition-colors">All Courses</a></li>
+                        <li><a href="about.html" class="hover:text-brand-neon transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-brand-neon transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-medium mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Kothrud, Pune, Maharashtra, India
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            +91 98765 43210
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            info@dixittraining.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600">&copy; 2026 Dixit Training. All rights reserved.</p>
+                <div class="flex gap-4 text-xs text-gray-600">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interactions -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // Intersection Observer for Reveal Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+        
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

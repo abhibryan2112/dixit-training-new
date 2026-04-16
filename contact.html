@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Dixit Training</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0b0a',
+                            light: '#f2f6e8',
+                            card: '#131512',
+                            neon: '#ccff00',
+                            gray: '#8a8d86'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #0a0b0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Subtle glowing background effect */
+        .bg-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(204, 255, 0, 0.05) 0%, rgba(10, 11, 10, 0) 60%);
+            top: 100px;
+            left: -300px;
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Custom Form Styling */
+        .form-input {
+            background-color: #131512;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(204, 255, 0, 0.5);
+            box-shadow: 0 0 15px rgba(204, 255, 0, 0.1);
+            background-color: #1a1d17;
+        }
+
+        /* Dark Mode Map Filter trick */
+        .dark-map {
+            filter: invert(90%) hue-rotate(180deg) brightness(80%) contrast(120%);
+            border-radius: 1.5rem;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0b0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2d28;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ccff00;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-neon selection:text-black">
+
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center bg-brand-dark/80 backdrop-blur-md rounded-full px-6 py-3 border border-white/10">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold tracking-tighter text-white">
+                    Dixit<span class="text-brand-neon">.</span>
+                </a>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                    <a href="index.html" class="hover:text-brand-neon transition-colors">Home</a>
+                    <a href="courses.html" class="hover:text-brand-neon transition-colors">Courses</a>
+                    <a href="about.html" class="hover:text-brand-neon transition-colors">About Us</a>
+                    <a href="contact.html" class="text-brand-neon transition-colors">Contact</a>
+                </div>
+
+                <!-- CTA -->
+                <div class="hidden md:block">
+                    <a href="#contact-form" class="bg-brand-light text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-neon transition-all duration-300 hover:shadow-[0_0_20px_rgba(204,255,0,0.3)]">
+                        Enroll Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white focus:outline-none" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div class="md:hidden hidden absolute w-full bg-brand-dark/95 backdrop-blur-lg border-b border-white/10 left-0 top-[80px]" id="mobile-menu">
+            <div class="px-6 py-6 space-y-4 flex flex-col">
+                <a href="index.html" class="text-gray-300 text-lg font-medium">Home</a>
+                <a href="courses.html" class="text-gray-300 text-lg font-medium">Courses</a>
+                <a href="about.html" class="text-gray-300 text-lg font-medium">About Us</a>
+                <a href="contact.html" class="text-brand-neon text-lg font-medium">Contact</a>
+                <a href="#contact-form" class="bg-brand-neon text-black text-center px-6 py-3 rounded-full font-semibold mt-4">Enroll Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-40 pb-16 px-6 max-w-7xl mx-auto text-center relative z-10">
+        <div class="reveal">
+            <span class="inline-block px-4 py-1.5 border border-brand-neon/30 bg-brand-neon/5 rounded-full text-xs font-semibold tracking-wider text-brand-neon uppercase mb-6">
+                Get In Touch
+            </span>
+            <h1 class="text-5xl md:text-7xl font-medium tracking-tight leading-[1.1] mb-6">
+                Let's Talk <span class="font-serif italic font-light text-brand-neon">Numbers.</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Whether you're looking to upskill yourself, train your corporate team, or just have a question about our courses, we're here to help.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Contact Section -->
+    <section class="py-12 relative z-10" id="contact-form">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
+                
+                <!-- Left: Contact Information Cards -->
+                <div class="lg:col-span-4 space-y-6">
+                    
+                    <!-- Location Card -->
+                    <div class="bg-brand-card p-8 rounded-3xl border border-white/5 reveal hover:border-white/20 transition-colors">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-medium mb-2">Our Headquarters</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Dixit Training Institute<br>
+                            Kothrud, Pune,<br>
+                            Maharashtra, India
+                        </p>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div class="bg-brand-card p-8 rounded-3xl border border-white/5 reveal delay-100 hover:border-white/20 transition-colors">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-white mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-medium mb-2">Email Us</h3>
+                        <p class="text-gray-400 text-sm mb-4">We usually respond within 24 hours.</p>
+                        <a href="mailto:info@dixittraining.com" class="text-brand-neon font-medium hover:text-white transition-colors">info@dixittraining.com</a>
+                    </div>
+
+                    <!-- Phone Card -->
+                    <div class="bg-brand-card p-8 rounded-3xl border border-white/5 reveal delay-200 hover:border-white/20 transition-colors">
+                        <div class="w-12 h-12 bg-brand-neon/10 rounded-xl flex items-center justify-center text-brand-neon mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-medium mb-2">Call Us</h3>
+                        <p class="text-gray-400 text-sm mb-4">Mon-Fri from 9am to 6pm IST.</p>
+                        <a href="tel:+919876543210" class="text-brand-neon font-medium hover:text-white transition-colors">+91 98765 43210</a>
+                    </div>
+
+                </div>
+
+                <!-- Right: Contact Form -->
+                <div class="lg:col-span-8">
+                    <div class="bg-[#0f110d] border border-white/5 p-8 md:p-12 rounded-[2rem] relative overflow-hidden reveal">
+                        <!-- Abstract Deco inside form -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-neon/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+                        <h2 class="text-3xl font-medium mb-2">Send a Message</h2>
+                        <p class="text-gray-400 mb-8 text-sm">Fill out the form below and our team will get back to you shortly.</p>
+
+                        <form action="#" method="POST" class="space-y-6 relative z-10" onsubmit="event.preventDefault(); alert('Demo form submitted! In a live environment, this would connect to your backend.');">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <!-- Name -->
+                                <div class="space-y-2">
+                                    <label for="name" class="text-sm font-medium text-gray-300">Full Name <span class="text-brand-neon">*</span></label>
+                                    <input type="text" id="name" required class="w-full form-input rounded-xl px-4 py-3 text-sm" placeholder="John Doe">
+                                </div>
+                                <!-- Email -->
+                                <div class="space-y-2">
+                                    <label for="email" class="text-sm font-medium text-gray-300">Email Address <span class="text-brand-neon">*</span></label>
+                                    <input type="email" id="email" required class="w-full form-input rounded-xl px-4 py-3 text-sm" placeholder="john@example.com">
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="space-y-2">
+                                <label for="phone" class="text-sm font-medium text-gray-300">Phone Number</label>
+                                <input type="tel" id="phone" class="w-full form-input rounded-xl px-4 py-3 text-sm" placeholder="+91 XXXXX XXXXX">
+                            </div>
+
+                            <!-- Course Interest (Optional Dropdown) -->
+                            <div class="space-y-2">
+                                <label for="interest" class="text-sm font-medium text-gray-300">I am interested in...</label>
+                                <select id="interest" class="w-full form-input rounded-xl px-4 py-3 text-sm appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Select a topic</option>
+                                    <option value="corporate">Corporate Training Workshop</option>
+                                    <option value="personal">Personal Finance Course</option>
+                                    <option value="business">Business Finance for Founders</option>
+                                    <option value="general">General Inquiry</option>
+                                </select>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="space-y-2">
+                                <label for="message" class="text-sm font-medium text-gray-300">Your Message <span class="text-brand-neon">*</span></label>
+                                <textarea id="message" required rows="5" class="w-full form-input rounded-xl px-4 py-3 text-sm resize-none" placeholder="How can we help you?"></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="w-full bg-brand-light text-brand-dark font-medium px-8 py-4 rounded-xl hover:bg-brand-neon transition-all duration-300 flex items-center justify-center gap-2 group shadow-[0_0_0_rgba(204,255,0,0)] hover:shadow-[0_0_20px_rgba(204,255,0,0.2)]">
+                                Send Message
+                                <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 reveal">
+            <div class="relative w-full h-[500px] bg-brand-card rounded-[2rem] p-2 border border-white/5 overflow-hidden">
+                <div class="absolute inset-0 z-10 pointer-events-none rounded-[2rem] shadow-[inset_0_0_50px_rgba(10,11,10,1)]"></div>
+                <!-- Google Maps Embed for Kothrud, Pune -->
+                <!-- The 'dark-map' class uses CSS filters to make the standard Google Map look dark and fit the theme -->
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30263.26792618991!2d73.79155734185264!3d18.530366673324635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf0e764722eb%3A0xc665b169541a4a41!2sKothrud%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="dark-map object-cover">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 pt-16 pb-8 bg-black mt-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <a href="index.html" class="text-3xl font-bold tracking-tighter text-white mb-6 block">
+                        Dixit<span class="text-brand-neon">.</span>
+                    </a>
+                    <p class="text-gray-500 max-w-sm mb-6">
+                        Making financial literacy accessible, practical, and jargon-free for professionals, founders, and students everywhere.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">in</a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">tw</a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-neon hover:text-black transition-colors">ig</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-medium mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm">
+                        <li><a href="index.html" class="hover:text-brand-neon transition-colors">Home</a></li>
+                        <li><a href="courses.html" class="hover:text-brand-neon transition-colors">All Courses</a></li>
+                        <li><a href="about.html" class="hover:text-brand-neon transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="text-brand-neon transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-medium mb-6">Contact</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Kothrud, Pune, Maharashtra, India
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            +91 98765 43210
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-brand-neon shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            info@dixittraining.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600">&copy; 2026 Dixit Training. All rights reserved.</p>
+                <div class="flex gap-4 text-xs text-gray-600">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interactions -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // Intersection Observer for Reveal Animations
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+        
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
