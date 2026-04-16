@@ -1,3 +1,12 @@
 {
-  "items": []
+  "items": [
+    {
+      "title": "Sample",
+      "slug": "sample",
+      "date": "2026-04-16T13:59:00.000+05:30",
+      "excerpt": "sample excerpt",
+      "image": "/images/uploads/a37f672d2450ea71b25f6c73c22044df.jpg",
+      "body": "sample content\n\n# **sample content**"
+    }
+  ]
 }
