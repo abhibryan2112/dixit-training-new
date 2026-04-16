@@ -1,0 +1,27 @@
+backend:
+  name: git-gateway
+  branch: main # Make sure this matches your GitHub branch (main or master)
+
+# Where to save uploaded images
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    # We use a 'file' collection so it saves everything into one easy-to-read JSON file
+    files:
+      - file: "data/posts.json"
+        label: "Blog Posts"
+        name: "posts"
+        fields:
+          - label: "Posts List"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "URL Slug", name: "slug", widget: "string", hint: "e.g. my-first-post (No spaces!)"}
+              - {label: "Date", name: "date", widget: "datetime"}
+              - {label: "Excerpt", name: "excerpt", widget: "text"}
+              - {label: "Cover Image", name: "image", widget: "image", required: false}
+              - {label: "Post Content", name: "body", widget: "markdown"}
